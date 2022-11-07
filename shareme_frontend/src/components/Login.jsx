@@ -28,7 +28,7 @@ const Login = () => {
     client.createIfNotExists(user).then(()=> {
       navigate('/', { replace: true })
     })
-    console.log(user);
+    console.log("user", user);
   }
 
   return (
