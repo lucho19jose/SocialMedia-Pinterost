@@ -10,7 +10,7 @@ import { client } from '../client'
 import logo from '../assets/logo.png'
 
 const Home = () => {
-  const [toogleSidebar, setToogleSidebar] = useState(false)
+  const [toggleSidebar, setToggleSidebar] = useState(false)
   const [user, setUser] = useState(null); 
   const scrollRef = useRef(null);
 
@@ -39,7 +39,7 @@ const Home = () => {
       </div>
       <div className='flex md:hidden flex-row'>
         <div className='p-2 w-full flex flex-row justify-between items-center shadow-md'>
-          <HiMenu fontSize={40} className='cursor-pointer' onClick={() => setToogleSidebar(true)}/>
+          <HiMenu fontSize={40} className='cursor-pointer' onClick={() => setToggleSidebar(true)}/>
           <Link
             to={'/'}
           >
@@ -51,12 +51,12 @@ const Home = () => {
             <img src={ user?.image } alt="logo"  className='w-28' referrerPolicy="no-referrer"/>
           </Link>
         </div>
-        { toogleSidebar && (
+        { toggleSidebar && (
           <div className='fixed w-4/5 bg-white h-screen overflow-y-auto shadow-md z-10 animate-slide-in'>
             <div className='absolute w-full flex justify-end items-center p-2'>
-              <AiFillCloseCircle fontSize={30} className='cursor-pointer' onClick={() => setToogleSidebar(false)}/>
+              <AiFillCloseCircle fontSize={30} className='cursor-pointer' onClick={() => setToggleSidebar(false)}/>
             </div>
-            <Sidebar user={ user && user } closeToggle={setToogleSidebar}/>
+            <Sidebar user={ user && user } closeToggle={setToggleSidebar}/>
           </div>
         ) }
       </div>
