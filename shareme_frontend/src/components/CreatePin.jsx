@@ -6,16 +6,19 @@ import { useNavigate } from 'react-router-dom';
 import { categories } from '../utils/data'
 import { client } from '../client'
 import Spinner from './Spinner'
+import { Oval } from 'react-loader-spinner';
 
 const CreatePin = ({ user }) => {
   const [title, setTitle] = useState('');
   const [about, setAbout] = useState('');
   const [loading, setLoading] = useState(false);
-  const [destination, setDestination] = useState();
+  const [destination, setDestination] = useState('');
   const [fields, setFields] = useState();
   const [category, setCategory] = useState();
   const [imageAsset, setImageAsset] = useState();
   const [wrongImageType, setWrongImageType] = useState(false);
+
+  const [saving, setSaving] = useState(false);
 
   const navigate = useNavigate();
 
@@ -41,6 +44,8 @@ const CreatePin = ({ user }) => {
   }
 
   const savePin = () => {
+    setSaving(true);
+    console.log("saving value", saving);
     if(title && about && destination && imageAsset?._id && category){
       const doc = {
         _type: 'pin',
@@ -61,12 +66,14 @@ const CreatePin = ({ user }) => {
         },
         category,
       };
-
+      
       client.create(doc).then(() => {
+        setSaving(false);
         navigate('/');
       });
     }else{
       setFields(true);
+      setSaving(false);
       setTimeout(
         () => {
           setFields(false);
@@ -136,48 +143,81 @@ const CreatePin = ({ user }) => {
           </div>
         </div>
       </div>
-      <div>
+      <div className='flex flex-1 flex-col gap-6 lg:pl-5 mt-5 w-full'>
         <input 
           type="text"
           name="Title"
           value={title}
           onChange={e => setTitle(e.target.value)}
           placeholder="add your title"
+          className='outline-none text-2xl sm:text-3xl font-bold border-b-2 border-gray-200 p-2'
         />
+        {user && (
+          <div className="flex gap-2 mt-2 mb-2 items-center bg-white rounded-lg ">
+            <img
+              src={user.image}
+              className="w-10 h-10 rounded-full"
+              alt="user-profile"
+            />
+            <p className="font-bold">{user.userName}</p>
+          </div>
+        )}
         <input 
           type="text"
           value={about}
           onChange={e => setAbout(e.target.value)}
           placeholder="Tell me what is your Pin is about"
+          className='outline-none text-base sm:text-lg border-b-2 border-gray-200 p-2'
         />
         <input 
-          type="url"
+          type="text"
           value={destination}
           onChange={e => setDestination(e.target.value)}
           placeholder="add an Url Destination link "
+          className='outline-none text-base sm:text-lg border-b-2 border-gray-200 p-2'
         />
-        <div>
+        <div className='flex flex-col'>
           <div>
-            <p>Choose pin category</p>
+            <p className='mb-2 font-semibold text:lg sm:text-xl'>Choose pin category</p>
             <select name="category"
               onChange={(e) => { setCategory(e.target.value) }}
+              className='outline-none w-4/5 text-base border-b-2 border-gray-200 p-2 rounded-md cursor-pointer'
             >
-              <option value="others">Select Category</option>
+              <option value="others" className='sm:text-bg bg-white'>Select Category</option>
               { categories.map((item, i) => (
-                <option value={item.name} key={i}>
+                <option value={item.name} key={i} className='text-base border-0 outline-none capitalize bg-white text-black'>
                   { item.name }
                 </option>
               )) }
 
             </select>
           </div>
-          <div>
+          <div className='flex justify-end items-end mt-5'>
             <button
               type='button'
               onClick={savePin}
-              className=''
+              className='flex justify-center bg-red-500 text-white font-bold p-2 rounded-full w-28 outline-none'
             >
-              Save Pin
+              <span>
+                Save Pin
+              </span>
+              {saving && (
+                  <div style={{ height: '10px', width: '25px' }}>
+                    <Oval
+                      height={20}
+                      width={20}
+                      color="black"
+                      wrapperStyle={{}}
+                      wrapperClass=""
+                      visible={true}
+                      ariaLabel='oval-loading'
+                      secondaryColor="#4fa94d"
+                      strokeWidth={2}
+                      strokeWidthSecondary={2}
+                    />
+                  </div>
+                )
+              }
             </button>
           </div>
         </div>
