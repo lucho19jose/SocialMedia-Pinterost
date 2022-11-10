@@ -11,6 +11,8 @@ import { fetchUser } from '../utils/fetchUser';
 
 const Pin = ( { another, pin: { postedBy, image, _id, destination, save } }) => {
 
+  //console.log("pin id", _id);
+
   const [postHovered, setPostHovered] = useState(false);
   
   const navigate = useNavigate();
