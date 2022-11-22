@@ -49,6 +49,9 @@ module.exports = {
         secondaryColor: '#F0F0F0',
         blackOverlay: 'rgba(0, 0 ,0 ,0.7)',
       },
+      backgroundImage: {
+        'user-profile': "url(src/assets/pinterost.png)"
+      },
       keyframes: {
         'slide-in': {
           '0%': {

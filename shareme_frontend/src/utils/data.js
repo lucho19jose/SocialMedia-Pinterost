@@ -182,3 +182,11 @@ export const pinDetailMorePinQuery = (pin) => {
   }`;
   return query;
 };
+
+export const userCreatedPinsQuery = () => {
+  return [];
+}
+
+export const userSavedPinsQuery = () => {
+  return [];
+}
