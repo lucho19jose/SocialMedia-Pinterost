@@ -7,8 +7,7 @@ import { GoogleLogin, googleLogout } from '@react-oauth/google'
 import jwt_decode from 'jwt-decode';
 
 import shareVideo from '../assets/share.mp4';
-import logo from '../assets/logo.png'
-import logowhite from '../assets/logowhite.png'
+import logo from '../assets/pinterost.png'
 
 import { client } from '../client'
 
